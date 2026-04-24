@@ -1,0 +1,35 @@
+#Magician
+"""nastaveni parametru"""
+dType.SetPTPJointParams(api,200,200,200,200,200,200,200,200,0)
+dType.SetPTPCoordinateParams(api,200,200,200,200,0)
+dType.SetPTPJumpParams(api, 10, 200,0)
+dType.SetPTPCommonParams(api, 100, 100,0)
+dType.SetJOGJointParams(api, 150, 150, 150, 150, 150, 150, 150, 150, 0)
+"""nastaveni start"""
+homeX=143
+homeY=12
+homeZ=-11
+homeR=-1
+
+"""opakovani X50"""
+for i in range(50):
+	"""presun do start"""
+	dType.SetPTPCmd(api, 2, homeX, homeY, homeZ, homeR, 1)
+
+	"""presun z start do definovaneho ciloveho bodu"""
+	dType.SetPTPCmd(api, 2, 264, 29, -49.1176, 0.5297, 1)
+	dType.SetPTPCmd(api, 2, 264, 29, -52, 0.5297, 1)
+	dType.SetPTPCmd(api, 2, 264, 29, -49.1176, 0.5297, 1)
+
+	"""jednoduchi pohyb"""
+	dType.SetJOGCmd(api, 1, 1, 1)
+	dType.SetWAITCmd(api, 500, 1)
+	dType.SetJOGCmd(api, 1, 0, 1)
+	dType.SetWAITCmd(api, 200, 1)
+	dType.SetJOGCmd(api, 1, 2, 1)
+	dType.SetWAITCmd(api, 500, 1)
+	dType.SetJOGCmd(api, 1, 0, 1)
+	dType.SetWAITCmd(api, 200, 1)
+
+	"""presun do start"""
+	dType.SetPTPCmd(api, 2, homeX, homeY, homeZ, homeR, 1)
