@@ -1,0 +1,34 @@
+#Magician
+import math ##Přidání knihovny pro pomocné matematické funkce
+
+#Nastavení rychlostí pohybů
+dType.SetPTPJointParams(api,200,200,200,200,200,200,200,200,0)
+dType.SetPTPCoordinateParams(api,200,200,200,200,0)
+dType.SetPTPJumpParams(api, 10, 200,0)
+dType.SetPTPCommonParams(api, 100, 100,0)
+
+#Stanovení základní pozice
+x = 117
+y = 22
+z = -5
+rHead = 11
+
+#Nastavení souřadnic středu kruhu
+stredX = 247
+stredY = -7
+stredZ = -53
+
+#Pohyb na základni pozici a střed kruhu
+dType.SetPTPCmd(api, 2, x, y, z, rHead, 1)
+dType.SetPTPCmd(api, 2, stredX, stredY, stredZ, rHead, 1)
+dType.SetPTPCmd(api, 2, stredX, stredY, stredZ+30, rHead, 1)
+
+#Smyčka, kde se mění úhel o 360°, ze kterého jsou vypočitané souřadnice bodů kruhu, kam se robot přesune
+for uhelStup in range(360):
+	uhelRad = math.radians(uhelStup) ##Převod ze stupňů na radiány
+	velikost = 15 ##Poloměr kresleného kruhu
+	X=stredX + velikost * math.cos(uhelRad) ##Parametrická rovnice pro souřadnici X
+	Y=stredY + velikost * math.sin(uhelRad) ##Parametrická rovnice pro souřadnici Y
+	dType.SetPTPCmd(api, 2, X, Y, stredZ, rHead, 1) ##Pohyb na bod kruhu v daném úhlu
+	
+dType.SetPTPCmd(api, 2, x, y, z, rHead, 1) ##Návrat na základní pozici
